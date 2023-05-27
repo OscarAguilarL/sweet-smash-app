@@ -4,6 +4,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
+import 'package:sweet_smash_app/config.dart';
+import 'package:sweet_smash_app/models/login_request_model.dart';
+import 'package:sweet_smash_app/services/api_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -106,6 +109,8 @@ class _LoginPageState extends State<LoginPage> {
             textColor: Colors.white,
             hintColor: Colors.white,
             borderRadius: 15,
+            validationColor: Colors.yellow,
+            borderErrorColor: Colors.yellow,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),
@@ -132,6 +137,8 @@ class _LoginPageState extends State<LoginPage> {
               hintColor: Colors.white,
               borderRadius: 15,
               obscureText: hidePassword,
+              validationColor: Colors.yellow,
+              borderErrorColor: Colors.yellow,
               suffixIcon: IconButton(
                 onPressed: () {
                   setState(() {
@@ -175,7 +182,36 @@ class _LoginPageState extends State<LoginPage> {
           Center(
             child: FormHelper.submitButton(
               'Iniciar sesión',
-              () {},
+              () {
+                if (validateAndSave()) {
+                  setState(() {
+                    isAPICallProcess = true;
+                  });
+
+                  LoginRequestModel model = LoginRequestModel(
+                    email: username!,
+                    password: password!,
+                  );
+
+                  APIService.login(model).then((response) {
+                    setState(() {
+                      isAPICallProcess = false;
+                    });
+                    if (response) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/home', (route) => false);
+                    } else {
+                      FormHelper.showSimpleAlertDialog(
+                        context,
+                        Config.appName,
+                        'Email o contraseña inválidos',
+                        'OK',
+                        () => Navigator.pop(context),
+                      );
+                    }
+                  });
+                }
+              },
               btnColor: const Color.fromARGB(255, 182, 78, 70),
               borderColor: Colors.white,
               txtColor: Colors.white,
@@ -191,7 +227,10 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.only(top: 10),
               child: RichText(
                 text: TextSpan(
-                  style: const TextStyle(color: Color.fromARGB(255, 185, 185, 185), fontSize: 14),
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 185, 185, 185),
+                    fontSize: 14,
+                  ),
                   children: <TextSpan>[
                     const TextSpan(text: '¿No tienes una cuenta? '),
                     TextSpan(
@@ -213,5 +252,16 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
+  }
+
+  bool validateAndSave() {
+    final form = globalFormKey.currentState;
+
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+
+    return false;
   }
 }
