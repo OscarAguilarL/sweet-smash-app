@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
+import 'package:sweet_smash_app/config.dart';
+import 'package:sweet_smash_app/models/register_request_model.dart';
+import 'package:sweet_smash_app/services/api_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -110,6 +113,8 @@ class _RegisterPageState extends State<RegisterPage> {
             textColor: Colors.white,
             hintColor: Colors.white,
             borderRadius: 15,
+            validationColor: Colors.yellow,
+            borderErrorColor: Colors.yellow,
           ),
 
           // LASTNAME FIELD
@@ -137,6 +142,8 @@ class _RegisterPageState extends State<RegisterPage> {
               textColor: Colors.white,
               hintColor: Colors.white,
               borderRadius: 15,
+              validationColor: Colors.yellow,
+              borderErrorColor: Colors.yellow,
             ),
           ),
 
@@ -165,6 +172,8 @@ class _RegisterPageState extends State<RegisterPage> {
               textColor: Colors.white,
               hintColor: Colors.white,
               borderRadius: 15,
+              validationColor: Colors.yellow,
+              borderErrorColor: Colors.yellow,
             ),
           ),
 
@@ -194,6 +203,8 @@ class _RegisterPageState extends State<RegisterPage> {
               hintColor: Colors.white,
               borderRadius: 15,
               obscureText: hidePassword,
+              validationColor: Colors.yellow,
+              borderErrorColor: Colors.yellow,
               suffixIcon: IconButton(
                 onPressed: () {
                   setState(() {
@@ -233,6 +244,8 @@ class _RegisterPageState extends State<RegisterPage> {
               textColor: Colors.white,
               hintColor: Colors.white,
               borderRadius: 15,
+              validationColor: Colors.yellow,
+              borderErrorColor: Colors.yellow,
               obscureText: hidePassword,
               suffixIcon: IconButton(
                 onPressed: () {
@@ -264,6 +277,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
+                          // ignore: avoid_print
                           print('forget password');
                         },
                     ),
@@ -278,7 +292,48 @@ class _RegisterPageState extends State<RegisterPage> {
           Center(
             child: FormHelper.submitButton(
               'Regístrate',
-              () {},
+              () {
+                if (validateAndSave()) {
+                  setState(() {
+                    isAPICallProcess = true;
+                  });
+
+                  RegisterRequestModel model = RegisterRequestModel(
+                    name: name!,
+                    lastname: lastname!,
+                    email: email!,
+                    password: password!,
+                    passwordConfirmation: passwordConfirmation!,
+                  );
+
+                  APIService.register(model).then((response) {
+                    setState(() {
+                      isAPICallProcess = false;
+                    });
+                    if (response.success) {
+                      FormHelper.showSimpleAlertDialog(
+                        context,
+                        Config.appName,
+                        'Registro completado correctamente',
+                        'Iniciar Sesión',
+                        () => Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          '/login',
+                          (route) => false,
+                        ),
+                      );
+                    } else {
+                      FormHelper.showSimpleAlertDialog(
+                        context,
+                        Config.appName,
+                        response.message,
+                        'OK',
+                        () => Navigator.pop(context),
+                      );
+                    }
+                  });
+                }
+              },
               btnColor: const Color.fromARGB(255, 182, 78, 70),
               borderColor: Colors.white,
               txtColor: Colors.white,
@@ -317,5 +372,16 @@ class _RegisterPageState extends State<RegisterPage> {
         ],
       ),
     );
+  }
+
+  bool validateAndSave() {
+    final form = globalFormKey.currentState;
+
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+
+    return false;
   }
 }

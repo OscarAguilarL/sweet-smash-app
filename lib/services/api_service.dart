@@ -5,6 +5,7 @@ import 'package:sweet_smash_app/config.dart';
 import 'package:sweet_smash_app/models/login_request_model.dart';
 import 'package:sweet_smash_app/models/login_response_model.dart';
 import 'package:sweet_smash_app/models/register_request_model.dart';
+import 'package:sweet_smash_app/models/register_response_model.dart';
 import 'package:sweet_smash_app/services/shared_service.dart';
 
 class APIService {
@@ -30,7 +31,8 @@ class APIService {
     return false;
   }
 
-  static Future<bool> register(RegisterRequestModel model) async {
+  static Future<RegisterResponseModel> register(
+      RegisterRequestModel model) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
@@ -42,6 +44,30 @@ class APIService {
       body: jsonEncode(model.toJson()),
     );
 
-    return response.statusCode == 201;
+    return registerResponseJson(response.body);
+  }
+
+  static Future<String> getUserProfile() async {
+    LoginResponseModel? loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${loginDetails!.token}',
+    };
+
+    Uri url = Uri.http(
+      Config.apiURL,
+      '${Config.userProfileAPI}/${loginDetails.userId}',
+    );
+    var response = await client.get(
+      url,
+      headers: requestHeaders,
+    );
+
+    if (response.statusCode == 200) {
+      return response.body;
+    }
+
+    return "";
   }
 }
