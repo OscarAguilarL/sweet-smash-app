@@ -277,7 +277,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           Center(
             child: FormHelper.submitButton(
-              'Iniciar sesión',
+              'Regístrate',
               () {},
               btnColor: const Color.fromARGB(255, 182, 78, 70),
               borderColor: Colors.white,
@@ -297,16 +297,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: const TextStyle(
                       color: Color.fromARGB(255, 185, 185, 185), fontSize: 14),
                   children: <TextSpan>[
-                    const TextSpan(text: '¿No tienes una cuenta? '),
+                    const TextSpan(text: '¿Ya tienes una cuenta? '),
                     TextSpan(
-                      text: 'Regístrate',
+                      text: 'Inicia Sesión',
                       style: const TextStyle(
                         color: Colors.white,
                         decoration: TextDecoration.underline,
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.pushNamed(context, '/register');
+                          Navigator.pushNamed(context, '/');
                         },
                     ),
                   ],
