@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sweet_smash_app/config.dart';
 import 'package:sweet_smash_app/services/shared_service.dart';
-import 'package:sweet_smash_app/widgets/user_profile_info.dart';
+import 'package:sweet_smash_app/modules/auth/widgets/user_profile_info.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

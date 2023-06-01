@@ -3,8 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:sweet_smash_app/config.dart';
-import 'package:sweet_smash_app/models/register_request_model.dart';
-import 'package:sweet_smash_app/services/api_service.dart';
+import 'package:sweet_smash_app/modules/auth/models/register_request_model.dart';
+import 'package:sweet_smash_app/modules/auth/services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -306,7 +306,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     passwordConfirmation: passwordConfirmation!,
                   );
 
-                  APIService.register(model).then((response) {
+                  AuthService.register(model).then((response) {
                     setState(() {
                       isAPICallProcess = false;
                     });
