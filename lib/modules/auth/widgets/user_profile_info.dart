@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_smash_app/services/api_service.dart';
+import 'package:sweet_smash_app/modules/auth/services/auth_service.dart';
 
 class UserProfileInfo extends StatelessWidget {
   const UserProfileInfo({super.key});
@@ -7,7 +7,7 @@ class UserProfileInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: APIService.getUserProfile(),
+      future: AuthService.getUserProfile(),
       builder: (BuildContext context, AsyncSnapshot<String> model) {
         if (model.hasData) {
           return Center(child: Text(model.data!));

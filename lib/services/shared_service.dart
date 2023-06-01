@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_smash_app/models/login_response_model.dart';
+import 'package:sweet_smash_app/modules/auth/models/login_response_model.dart';
 
 class SharedService {
   static Future<bool> isLoggedIn() async {

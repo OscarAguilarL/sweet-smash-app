@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:sweet_smash_app/config.dart';
-import 'package:sweet_smash_app/models/login_request_model.dart';
-import 'package:sweet_smash_app/models/login_response_model.dart';
-import 'package:sweet_smash_app/models/register_request_model.dart';
-import 'package:sweet_smash_app/models/register_response_model.dart';
+import 'package:sweet_smash_app/modules/auth/models/login_request_model.dart';
+import 'package:sweet_smash_app/modules/auth/models/login_response_model.dart';
+import 'package:sweet_smash_app/modules/auth/models/register_request_model.dart';
+import 'package:sweet_smash_app/modules/auth/models/register_response_model.dart';
 import 'package:sweet_smash_app/services/shared_service.dart';
 
-class APIService {
+class AuthService {
   static http.Client client = http.Client();
 
   static Future<bool> login(LoginRequestModel model) async {

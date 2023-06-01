@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:sweet_smash_app/config.dart';
-import 'package:sweet_smash_app/models/login_request_model.dart';
-import 'package:sweet_smash_app/services/api_service.dart';
+import 'package:sweet_smash_app/modules/auth/models/login_request_model.dart';
+import 'package:sweet_smash_app/modules/auth/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -193,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                     password: password!,
                   );
 
-                  APIService.login(model).then((response) {
+                  AuthService.login(model).then((response) {
                     setState(() {
                       isAPICallProcess = false;
                     });
