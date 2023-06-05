@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sweet_smash_app/modules/products/models/get_all_products_response_model.dart';
+import 'package:sweet_smash_app/modules/products/state/cart_state.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({
@@ -11,6 +13,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartState = Provider.of<CartState>(context);
+
     return ListTile(
       leading: Image.network(product.images[0]),
       title: Text(product.label),
@@ -23,7 +27,7 @@ class ProductItem extends StatelessWidget {
           const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () {
-              //* LOGICA PARA AGREGAR AL CARRITO
+              cartState.addProduct(product, 1);
             },
             child: const Text("Agregar al carrito"),
           )

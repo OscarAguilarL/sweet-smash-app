@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sweet_smash_app/config.dart';
 import 'package:sweet_smash_app/modules/products/models/get_all_products_response_model.dart';
 import 'package:sweet_smash_app/modules/products/services/products_services.dart';
+import 'package:sweet_smash_app/modules/products/state/cart_state.dart';
+import 'package:sweet_smash_app/modules/products/widgets/cart_button.dart';
 import 'package:sweet_smash_app/modules/products/widgets/products_list.dart';
 import 'package:sweet_smash_app/services/shared_service.dart';
 
@@ -15,16 +18,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+
+    final cartState = Provider.of<CartState>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(Config.appName),
         elevation: 0,
         actions: [
           //* CART
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart_outlined),
-          ),
+          CartButton(itemCount: cartState.totalItems),
 
           //* LOGOUT
           IconButton(
