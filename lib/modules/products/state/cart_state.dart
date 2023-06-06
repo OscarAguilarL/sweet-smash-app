@@ -42,6 +42,12 @@ class CartState extends ChangeNotifier {
     notifyListeners();
   }
 
+  ProductInCart? findProductInCart(int productId) {
+    return productsInCart.firstWhereOrNull(
+      (element) => element.productId == productId,
+    );
+  }
+
   void removeProduct(int productId) {
     productsInCart.removeWhere((element) => element.productId == productId);
     notifyListeners();

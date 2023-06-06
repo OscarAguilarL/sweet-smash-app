@@ -15,8 +15,11 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartState = Provider.of<CartState>(context);
 
+    var totalItemsInCart = cartState.findProductInCart(product.id)?.quantity;
+
     return ListTile(
       leading: Image.network(product.images[0]),
+      trailing: Text(totalItemsInCart != null ? "En carrito: $totalItemsInCart" : ""),
       title: Text(product.label),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
