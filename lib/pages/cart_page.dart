@@ -23,7 +23,7 @@ class CartPage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () => Navigator.pushNamed(context, "/checkout"),
         label: const Text("Proceder al pago"),
       ),
       backgroundColor: Colors.grey[200],

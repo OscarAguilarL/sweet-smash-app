@@ -6,6 +6,7 @@ import 'package:sweet_smash_app/modules/auth/models/login_request_model.dart';
 import 'package:sweet_smash_app/modules/auth/models/login_response_model.dart';
 import 'package:sweet_smash_app/modules/auth/models/register_request_model.dart';
 import 'package:sweet_smash_app/modules/auth/models/register_response_model.dart';
+import 'package:sweet_smash_app/modules/auth/models/user_profile_response_model.dart';
 import 'package:sweet_smash_app/services/shared_service.dart';
 
 class AuthService {
@@ -47,7 +48,7 @@ class AuthService {
     return registerResponseJson(response.body);
   }
 
-  static Future<String> getUserProfile() async {
+  static Future<UserProfile> getUserProfile() async {
     LoginResponseModel? loginDetails = await SharedService.loginDetails();
 
     Map<String, String> requestHeaders = {
@@ -64,10 +65,6 @@ class AuthService {
       headers: requestHeaders,
     );
 
-    if (response.statusCode == 200) {
-      return response.body;
-    }
-
-    return "";
+    return userProfileResponseModelFromJson(response.body).data;
   }
 }

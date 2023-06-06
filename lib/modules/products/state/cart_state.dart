@@ -13,6 +13,16 @@ class ProductInCart {
     required this.productId,
   });
 
+  factory ProductInCart.fromJson(Map<String, dynamic> json) => ProductInCart(
+        quantity: json["quantity"],
+        productId: json["productId"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "quantity": quantity,
+        "productId": productId,
+      };
+
   @override
   String toString() {
     return "quantity: $quantity, productId: $productId";
