@@ -35,11 +35,10 @@ class CheckoutService {
 
     Uri url = Uri.http(Config.apiURL, "/api/orders/request");
 
-    final response = await _client.post(
+    await _client.post(
       url,
       headers: requestHeaders,
       body: jsonEncode(request.toJson()),
     );
-    print(response);
   }
 }
