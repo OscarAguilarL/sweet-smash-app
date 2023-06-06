@@ -18,7 +18,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-
     final cartState = Provider.of<CartState>(context);
 
     return Scaffold(
@@ -31,11 +30,9 @@ class _HomePageState extends State<HomePage> {
 
           //* LOGOUT
           IconButton(
-            onPressed: () {
-              SharedService.logout(context);
-            },
+            onPressed: () => SharedService.logout(context),
             icon: const Icon(Icons.logout_rounded),
-            color: Colors.black,
+            color: Colors.white,
           ),
         ],
       ),

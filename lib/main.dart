@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sweet_smash_app/modules/products/state/cart_state.dart';
+import 'package:sweet_smash_app/pages/cart_page.dart';
 import 'package:sweet_smash_app/pages/home_page.dart';
 import 'package:sweet_smash_app/pages/login_page.dart';
 import 'package:sweet_smash_app/pages/register_page.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const HomePage(),
           '/login': (context) => const LoginPage(),
           '/register': (context) => const RegisterPage(),
+          '/cart': (context) => const CartPage(),
         },
       ),
     );

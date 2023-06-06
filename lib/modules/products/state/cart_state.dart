@@ -57,4 +57,18 @@ class CartState extends ChangeNotifier {
     productsInCart = [];
     notifyListeners();
   }
+
+  double getTotalAmount(List<Product> products) {
+    double amount = 0;
+    for (var item in productsInCart) {
+      Product? product =
+          products.firstWhereOrNull((p) => p.id == item.productId);
+
+      if (product != null) {
+        amount += product.unitPrice * item.quantity;
+      }
+    }
+
+    return amount;
+  }
 }
